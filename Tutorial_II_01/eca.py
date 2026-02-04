@@ -3,6 +3,8 @@ This code simulates elementary CAs
 It prints a space-time plot of the CA behaviour
 """
 
+# Load the required modules
+# Installed modules
 import numpy as np
 import matplotlib.pyplot as plt
 

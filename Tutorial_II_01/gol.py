@@ -1,15 +1,19 @@
-## A template for a CA-type model, using Game of Life update rules
-## Interactive mode of matplotlib is used to visualise the results. 
+"""
+A template for a CA-type model, using Game of Life update rules.
+Interactive mode of matplotlib is used to visualise the results. 
+"""
 
-# Load the required libraries
+# Load the required modules
+import random
+
+# Installed modules
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 from matplotlib.widgets import Slider, Button, RadioButtons
 
 # Parameters for simulation
 grid_size = 50
-timesteps = 250  # Number of timesteps to simulate
+timesteps = 300  # Number of timesteps to simulate
 
 # Set the seed at a constant value for reproducability
 # Change to get other random initial pattern
@@ -69,11 +73,14 @@ def simulate_asyncstep(grid):
 # that grid for reference to determine what happens next. 
 def simulate_step(grid):
     new_grid = grid.copy()  # Make a copy of the current grid state
+
     for i in range(grid_size):  # loop over all rows
         for j in range(grid_size):  # loop over all columns
+
             # Count the number of live neighbors with torus boundary conditions
             live_neighbors = 0
             neighbors = [(i-1,j-1), (i-1,j), (i-1,j+1), (i,j-1), (i,j+1), (i+1,j-1), (i+1,j), (i+1,j+1)]
+            
             for ni, nj in neighbors:
                 ni = ni % grid_size
                 nj = nj % grid_size
@@ -89,19 +96,17 @@ def simulate_step(grid):
     return new_grid
 
 
-
+# Plotting code
 fig, ax = plt.subplots(figsize=(6, 6)) # returns figure (fig) and axes (ax) so we can set these later
 cols = plt.cm.viridis
 cols.set_under(color='white')
 norm = plt.cm.colors.Normalize(vmin=1, vmax=100)  # Range of color map
 im = ax.imshow(grid, cmap=cols,norm=norm)
-
+ax.axis("off")
 
 def plot_grid(grid,t):
-    ax.clear()  # Clear the previous plot
-    ax.imshow(grid, cmap=cols, norm=norm)
+    im.set_data(grid)
     ax.set_title(f"Timestep: {t}")
-    ax.axis("off")
     
 # Finally, run the simulation and update the plots
 for t in range(1, timesteps + 1):
