@@ -1,1 +1,1 @@
-# Teaching_Introduction_2_Complexity
+# Introduction to Complexity Part II - Cellular Automata
